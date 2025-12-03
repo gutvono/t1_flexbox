@@ -23,13 +23,11 @@
 
 O banco ficará acessível em `127.0.0.1:3306`.
 
-## Rodar os Scripts SQL
+## Rodar os Scripts SQL para popular banco de dados
 
-Opção A (copiar e executar dentro do container):
-- `docker cp scripts/init.sql steemo-mysql:/tmp/init.sql`
-- `docker exec steemo-mysql mysql -uroot -proot -e "SOURCE /tmp/init.sql"`
-- `docker cp scripts/seed.sql steemo-mysql:/tmp/seed.sql`
-- `docker exec steemo-mysql mysql -uroot -proot -e "SOURCE /tmp/seed.sql"`
+Executar comandos:
+- `docker exec steemo-mysql mysql -uroot -proot -e "SOURCE /scripts/init.sql"`
+- `docker exec steemo-mysql mysql -uroot -proot -e "SOURCE /scripts/seed.sql"`
 
 Opção B (montar scripts ao iniciar para auto-inicialização):
 - `docker run -d --name steemo-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=steemo_db -e MYSQL_USER=steemo_user -e MYSQL_PASSWORD=steemo_pass -v ${PWD}/scripts:/docker-entrypoint-initdb.d steemo-mysql`
@@ -67,6 +65,7 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 ## Integração no Site
 
 - O menu da página principal (`index.html`) contém o link `Login` apontando para `public/login.php`.
+ - Também contém o botão `Usuarios` que abre a listagem em `public/users.php`.
 
 ## Observações
 
@@ -123,3 +122,39 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 - `input-text` e `select`: campos de entrada
 - `form-actions`: barra de ações do formulário
 - `btn`, `btn-primario`, `btn-link`: botões consistentes com o tema
+
+## Funcionalidades
+
+- Login
+  - Formulário essencial em `public/login.php` sem cabeçalho/rodapé
+  - Campos: Email e Senha, botão com gradiente nas cores do tema
+  - Botões Voltar: histórico e Home com fallback confiável
+  - Feedback simples de sucesso/erro após envio
+
+- Cadastro
+  - Formulário essencial em `public/register.php` sem cabeçalho/rodapé
+  - Campos: Nome, Email, Celular, Nível (Usuário/Administrador), Senha
+  - Botões Voltar: histórico e Home
+  - Salva no banco com validação básica de email
+
+- Listagem de Usuários
+  - Página dedicada em `public/users.php` com tabela responsiva
+  - Colunas: ID, Nome, Email, Celular, Nível, Criado em
+  - Ações por linha:
+    - Editar: transforma a linha em inputs, com “Salvar alterações” e “Descartar”
+    - Excluir: modal de confirmação e remoção definitiva
+  - CRUD completo:
+    - Create: via cadastro
+    - Read: via listagem
+    - Update: `src/users_update.php` (POST)
+    - Delete: `src/users_delete.php` (POST)
+  - Feedback visual em erros, mantendo identidade visual com Bootstrap + tema
+  - Acesso pela navbar da home via botão `Usuarios` ou diretamente em `http://localhost:8080/public/users.php`
+  - Requisito técnico: MySQL (container) em execução e scripts `init.sql`/`seed.sql` aplicados
+
+- Navegação
+  - Botões de retorno funcionam em múltiplos cenários
+  - Links diretos para login/cadastro a partir da página principal
+
+- Responsividade
+  - Layouts testados em diferentes larguras, mantendo legibilidade
