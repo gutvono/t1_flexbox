@@ -73,32 +73,7 @@
     </div>
   </section>
 
-  <section class="jogos" id="jogos">
-    <h2>Jogos</h2>
-    <div class="jogos-container">
-      <div class="jogos-item">
-        <img src="img/jogo-1.png" alt="jogos-1">
-        <h3>Coal LLC</h3>
-        <p>Complete sua cota ou morra. Minere quantidades cada vez mais absurdas de carvão usando técnicas de mineração duvidosas, mas eficazes. Ou relaxe e minere no seu próprio ritmo, em modo pacífico.</p>
-        <p><sup>R$</sup> 29,99</p>
-        <a href="#">Comprar</a>
-      </div>
-      <div class="jogos-item">
-        <img src="img/jogo-2.png" alt="jogos-2">
-        <h3>Vampire Survivors</h3>
-        <p>Acabe com milhares de criaturas noturnas e sobreviva até o amanhecer! Vampire Survivors é um jogo casual de terror gótico com elementos roguelite onde suas escolhas podem fazer você crescer rapidamente e aniquilar os milhares de monstros que aparecem pelo caminho.</p>
-        <p><sup>R$</sup> 29,99</p>
-        <a href="#">Comprar</a>
-      </div>
-      <div class="jogos-item">
-        <img src="img/jogo-3.png" alt="jogos-3">
-        <h3>Stardew Valley</h3>
-        <p>Você herdou a antiga fazenda do seu avô, em Stardew Valley. Com ferramentas de segunda-mão e algumas moedas, você parte para dar início a sua nova vida. Será que você vai aprender a viver da terra, a transformar esse matagal em um próspero lar?</p>
-        <p><sup>R$</sup> 29,99</p>
-        <a href="#">Comprar</a>
-      </div>
-    </div>
-  </section>
+  <?php include __DIR__ . '/src/jogos_component.php'; ?>
 
   <section class="assinaturas" id="assinaturas">
     <h2>Assinaturas</h2>
