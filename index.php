@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<?php
+?><!DOCTYPE html>
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
   <title>Steemo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
   <div class="superinfo-bg">
@@ -24,9 +23,9 @@
 
   <header>
     <div class="menu-bg">
-      <div class="menu">
+      <div class="menu container">
         <div class="menu-logo">
-          <a href="index.html"><img src="img/logo.png" alt="Steemo Logo"></a>
+          <a href="index.php"><img src="img/logo.png" alt="Steemo Logo"></a>
         </div>
         <div class="menu-hamburguer">
           <span></span>
@@ -41,7 +40,6 @@
             <li><a href="#assinaturas">Assinaturas</a></li>
             <li><a href="#contato">Contato</a></li>
             <li><a href="public/login.php">Login</a></li>
-            <li><a href="public/users.php">Usuarios</a></li>
           </ul>
         </nav>
       </div>
@@ -175,6 +173,7 @@
     <p>&copy; 2023 Steemo. Todos os direitos reservados.</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const menuHamburguer = document.querySelector('.menu-hamburguer');
@@ -185,7 +184,6 @@
         menuNav.classList.toggle('ativo');
       });
       
-      // Fechar o menu ao clicar em um link
       const menuLinks = document.querySelectorAll('.menu-nav a');
       menuLinks.forEach(link => {
         link.addEventListener('click', function() {
@@ -226,12 +224,11 @@
           logout.addEventListener('click', (e) => {
             e.preventDefault();
             try { localStorage.removeItem('auth'); } catch(err) {}
-            window.location.href = '/index.html';
+            window.location.href = '/index.php';
           });
         }
       } catch(err) {}
     });
   </script>
 </body>
-
 </html>

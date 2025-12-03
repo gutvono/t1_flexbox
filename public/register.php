@@ -42,8 +42,8 @@
       <div class="d-flex justify-content-between align-items-center">
         <a class="btn btn-link p-0" href="./login.php">Já tenho conta</a>
         <div class="voltar-bar">
-          <button type="button" class="btn btn-outline-secondary btn-sm me-2" onclick="history.length>1?history.back():window.location.href='/index.html'">Voltar</button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.location.href='/index.html'">Home</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm me-2" onclick="history.length>1?history.back():window.location.href='/index.php'">Voltar</button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.location.href='/index.php'">Home</button>
         </div>
       </div>
     </form>

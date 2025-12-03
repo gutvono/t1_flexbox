@@ -40,9 +40,10 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 - No diretório do projeto (raiz):
   - `php -S localhost:8080 -t .`
 - Acesse:
+  - `http://localhost:8080/index.php`
   - `http://localhost:8080/public/login.php`
   - `http://localhost:8080/public/register.php`
-- Observação: Servir a raiz (`-t .`) garante o acesso aos arquivos em `src/` pelos wrappers em `public/handle_*.php` e ao CSS/IMG em `/css` e `/img`.
+  - Observação: Servir a raiz (`-t .`) garante o acesso aos arquivos em `src/` pelos wrappers em `public/handle_*.php` e ao CSS/IMG em `/css` e `/img`.
 
 ## Banco de Dados
 
@@ -64,8 +65,9 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 
 ## Integração no Site
 
-- O menu da página principal (`index.html`) contém o link `Login` apontando para `public/login.php`.
- - Também contém o botão `Usuarios` que abre a listagem em `public/users.php`.
+- A home agora é `index.php`, mantendo aparência e funcionalidade idênticas à anterior.
+- O menu da página principal contém o link `Login` apontando para `public/login.php`.
+- A listagem de usuários é acessível exclusivamente pelo dropdown do usuário administrador (fora do navbar).
 
 ## Observações
 
@@ -156,13 +158,13 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 - Navegação
   - Botões de retorno funcionam em múltiplos cenários
   - Links diretos para login/cadastro a partir da página principal
-  - Header com dropdown do usuário (fora do navbar) exibindo: `Logout` sempre e, para administradores, `Gerenciar produtos` e `Gerenciar usuarios`
+- Header com dropdown do usuário (fora do navbar) exibindo: `Logout` sempre e, para administradores, `Gerenciar produtos` e `Gerenciar usuarios`
   - O dropdown lê o estado do `localStorage` e persiste entre recargas
 
 - Responsividade
   - Layouts testados em diferentes larguras, mantendo legibilidade
 
 ### Como acessar a listagem de usuários
-- Pela navbar da home: botão `Usuarios`
-- Diretamente: `http://localhost:8080/public/users.php`
+- Pelo dropdown do usuário (administrador) na home
+- Diretamente: `http://localhost:8080/public/users.php` (apenas para testes diretos)
 - Requisitos: MySQL ativo e scripts `init.sql`/`seed.sql` aplicados

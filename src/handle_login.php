@@ -46,7 +46,7 @@ if (count($erros) === 0) {
           var payload = { username: <?php echo json_encode($user['nome']); ?>, role: <?php echo json_encode($user['nivel']); ?> };
           localStorage.setItem('auth', JSON.stringify(payload));
         } catch(e) {}
-        setTimeout(function(){ window.location.href = '/index.html'; }, 1500);
+        setTimeout(function(){ window.location.href = '/index.php'; }, 1500);
       })();
     </script>
   <?php } ?>
