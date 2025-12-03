@@ -178,7 +178,7 @@
             <button class="user-btn" aria-haspopup="true" aria-expanded="false">${auth.username}</button>
             <ul class="user-menu" role="menu" hidden>
               <li role="menuitem"><a href="#" id="logout-link">Logout</a></li>
-              ${role === 'administrador' ? '<li role="menuitem"><a href="#" id="manage-products-link">Gerenciar produtos</a></li>' : ''}
+              ${role === 'administrador' ? '<li role="menuitem"><a href="public/products.php" id="manage-products-link">Gerenciar produtos</a></li>' : ''}
               ${role === 'administrador' ? '<li role="menuitem"><a href="public/users.php" id="manage-users-link">Gerenciar usuarios</a></li>' : ''}
             </ul>`;
           userbar.appendChild(wrapper);

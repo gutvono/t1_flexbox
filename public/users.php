@@ -55,7 +55,7 @@ try {
     </div>
     <div class="d-flex justify-content-end mt-2">
       <button type="button" class="btn btn-outline-secondary me-2" onclick="history.length>1?history.back():window.location.href='/index.html'">Voltar</button>
-      <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/index.html'">Home</button>
+      <button type="button" class="btn btn-outline-secondary" onclick="window.location.href='/index.php'">Home</button>
     </div>
   </section>
 

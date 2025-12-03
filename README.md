@@ -9,10 +9,10 @@
 
 ## Estrutura de Pastas
 
-- `public/` páginas acessíveis: `login.php`, `register.php`.
-- `src/` backend PHP: `config.php`, `db.php`, `handle_login.php`, `handle_register.php`.
-- `scripts/` SQL: `init.sql` (criação), `seed.sql` (popular).
-- `docker/` Dockerfile do MySQL.
+- `public/` páginas acessíveis.
+- `src/` backend PHP.
+- `scripts/` SQL: `init.sql` (criação), `seed.sql` (popular db).
+- `docker/` Arquivos de configuração do Docker.
 
 ## Executar o MySQL com Docker
 
@@ -41,8 +41,6 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
   - `php -S localhost:8080 -t .`
 - Acesse:
   - `http://localhost:8080/index.php`
-  - `http://localhost:8080/public/login.php`
-  - `http://localhost:8080/public/register.php`
   - Observação: Servir a raiz (`-t .`) garante o acesso aos arquivos em `src/` pelos wrappers em `public/handle_*.php` e ao CSS/IMG em `/css` e `/img`.
 
 ## Banco de Dados
@@ -57,17 +55,18 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
   - `senha` VARCHAR(255) NOT NULL
   - `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 
+- Tabela: `produtos`
+  - `id` INT AUTO_INCREMENT PRIMARY KEY
+  - `titulo` VARCHAR(100) NOT NULL
+  - `descricao` TEXT NOT NULL
+  - `img` VARCHAR(255) NOT NULL
+  - `valor` DECIMAL(10,2) NOT NULL
+
 ## Credenciais de Teste (Seeder)
 
 - `alice@example.com` / `123456` (usuario)
 - `bruno@example.com` / `admin123` (administrador)
 - `carla@example.com` / `senha` (usuario)
-
-## Integração no Site
-
-- A home agora é `index.php`, mantendo aparência e funcionalidade idênticas à anterior.
-- O menu da página principal contém o link `Login` apontando para `public/login.php`.
-- A listagem de usuários é acessível exclusivamente pelo dropdown do usuário administrador (fora do navbar).
 
 ## Observações
 
@@ -89,9 +88,26 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 
 - WSL2 com Ubuntu (Windows)
   - Guia oficial: https://learn.microsoft.com/windows/wsl/install
-  - Habilitar WSL: executar em PowerShell (Admin) `wsl --install`
-  - Instalar Ubuntu pela Microsoft Store (Ubuntu 22.04 recomendado)
+  - Habilitar WSL: executar em PowerShell (Admin)
+    ```bash
+    wsl --install
+    ```
+  - Instalar Ubuntu:
+    ```bash
+    wsl --install -d Ubuntu-22.04
+    ```
   - Verificação: `wsl -l -v` (deve mostrar Ubuntu com versão `2`).
+
+- Docker CLI dentro do WSL2 com Ubuntu (Windows)
+  - Guia oficial: https://docs.docker.com/engine/install/ubuntu/
+  - Instalar no Ubuntu (WSL2):  
+    ```bash
+    sudo apt update
+    sudo apt install ca-certificates curl gnupg lsb-release
+    sudo apt install docker-cli
+    ```
+  - Verificação: `docker --version` e `docker run hello-world`
+
 
 - Docker Desktop (estável mais recente)
   - Download: https://www.docker.com/products/docker-desktop/
@@ -115,15 +131,6 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
 - Docker: `docker ps`, `docker logs steemo-mysql --tail=50`
 - MySQL (CLI): `mysql -h 127.0.0.1 -uroot -proot -e "SHOW TABLES IN steemo_db;"`
 - PHP servidor embutido: `php -S localhost:8080 -t public`
-
-## CSS (classes principais adicionadas)
-
-- `pagina`: container responsivo para páginas internas
-- `form-card`: cartão de formulário com borda/tema
-- `form-row`: agrupamento de label/campo
-- `input-text` e `select`: campos de entrada
-- `form-actions`: barra de ações do formulário
-- `btn`, `btn-primario`, `btn-link`: botões consistentes com o tema
 
 ## Funcionalidades
 
@@ -149,10 +156,25 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
   - CRUD completo:
     - Create: via cadastro
     - Read: via listagem
-    - Update: `src/users_update.php` (POST)
-    - Delete: `src/users_delete.php` (POST)
+    - Update: `src/users_update.php`
+    - Delete: `src/users_delete.php`
   - Feedback visual em erros, mantendo identidade visual com Bootstrap + tema
   - Acesso pela navbar da home via botão `Usuarios` ou diretamente em `http://localhost:8080/public/users.php`
+  - Requisito técnico: MySQL (container) em execução e scripts `init.sql`/`seed.sql` aplicados
+
+- Listagem de Produtos
+  - Página dedicada em `public/products.php` com tabela responsiva
+  - Colunas: ID, Título, Descrição, Imagem, Valor
+  - Ações por linha:
+    - Editar: abre um modal com campos pré-preenchidos para edição
+    - Excluir: modal de confirmação e remoção definitiva
+  - CRUD completo:
+    - Create: via cadastro
+    - Read: via listagem
+    - Update: `src/products_update.php`
+    - Delete: `src/products_delete.php`
+  - Feedback visual em erros, mantendo identidade visual com Bootstrap + tema
+  - Acesso pela navbar da home via botão `Produtos` ou diretamente em `http://localhost:8080/public/products.php`
   - Requisito técnico: MySQL (container) em execução e scripts `init.sql`/`seed.sql` aplicados
 
 - Navegação
