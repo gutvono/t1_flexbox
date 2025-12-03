@@ -31,13 +31,16 @@ if (count($erros) === 0) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-  <main style="max-width: 640px; margin: 32px auto; padding: 24px;">
+<body class="auth-wrapper">
+  <main class="auth-card">
     <h1>Login</h1>
     <p><?php echo htmlspecialchars($msg, ENT_QUOTES, 'UTF-8'); ?></p>
-    <p><a href="http://localhost:8080/login.php">Voltar</a> | <a href="http://localhost:8080/register.php">Cadastre-se</a></p>
+    <p><a href="/public/login.php">Voltar</a> | <a href="/public/register.php">Cadastre-se</a></p>
   </main>
+  <?php if (isset($user) && $user) { ?>
+    <script>setTimeout(function(){ window.location.href = '/index.html'; }, 1500);</script>
+  <?php } ?>
 </body>
 </html>
