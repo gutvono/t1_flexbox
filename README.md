@@ -7,6 +7,58 @@
 - Estrutura organizada em `public`, `src`, `scripts`, `docker`.
 - Senhas armazenadas em texto plano e sem validações robustas.
 
+## Pré-requisitos
+
+- MySQL Workbench (mais recente)
+  - Download: https://dev.mysql.com/downloads/workbench/
+  - Conexão passo-a-passo:
+    - Abrir Workbench → `+` para nova conexão
+    - `Hostname`: `127.0.0.1`
+    - `Port`: `3306`
+    - `Username`: `root`
+    - `Password`: `root`
+    - Testar conexão e salvar
+  - Verificação: conectar e executar `SHOW DATABASES;` (deve listar `steemo_db` após rodar o init).
+
+- WSL2 com Ubuntu (Windows)
+  - Guia oficial: https://learn.microsoft.com/windows/wsl/install
+  - Habilitar WSL: executar em PowerShell (Admin)
+    ```bash
+    wsl --install
+    ```
+  - Instalar Ubuntu:
+    ```bash
+    wsl --install -d Ubuntu-22.04
+    ```
+  - Verificação: `wsl -l -v` (deve mostrar Ubuntu com versão `2`).
+
+- Docker CLI dentro do WSL2 com Ubuntu (Windows) - Opção A (Docker)
+  - Guia oficial: https://docs.docker.com/engine/install/ubuntu/
+  - Instalar no Ubuntu (WSL2):  
+    ```bash
+    sudo apt update
+    sudo apt install ca-certificates curl gnupg lsb-release
+    sudo apt install docker-cli
+    ```
+  - Verificação: `docker --version` e `docker run hello-world`
+
+- Docker Desktop (estável mais recente) - Opção B (Docker)
+  - Download: https://www.docker.com/products/docker-desktop/
+  - Configurações recomendadas:
+    - Habilitar WSL2 integration para a distro Ubuntu
+    - Recursos: 2 CPUs, 4GB RAM (mínimo) para o MySQL
+  - Verificação: `docker --version` e `docker run hello-world`.
+
+- PHP (8.1+ recomendado; 8.2 testado)
+  - Download (Windows): https://windows.php.net/download
+  - No Linux (WSL/Ubuntu): `sudo apt update && sudo apt install php php-cli`
+  - Extensões necessárias:
+    - `pdo_mysql`
+  - Verificação:
+    - `php -v`
+    - Windows PowerShell: `php -m | findstr pdo_mysql`
+    - Linux: `php -m | grep pdo_mysql`
+
 ## Estrutura de Pastas
 
 - `public/` páginas acessíveis.
@@ -43,6 +95,17 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
   - `http://localhost:8080/index.php`
   - Observação: Servir a raiz (`-t .`) garante o acesso aos arquivos em `src/` pelos wrappers em `public/handle_*.php` e ao CSS/IMG em `/css` e `/img`.
 
+## Observações
+
+- Projeto em caráter de estudos, sem criptografia ou segurança avançada.
+- Qualquer usuário pode escolher nível `administrador` no cadastro.
+
+## Comandos úteis de verificação
+
+- Docker: `docker ps`, `docker logs steemo-mysql --tail=50`
+- MySQL (CLI): `mysql -h 127.0.0.1 -uroot -proot -e "SHOW TABLES IN steemo_db;"`
+- PHP servidor embutido: `php -S localhost:8080 -t public`
+
 ## Banco de Dados
 
 - Banco: `steemo_db`
@@ -62,75 +125,11 @@ Observação: o Dockerfile já copia `scripts/init.sql` e `scripts/seed.sql` par
   - `img` VARCHAR(255) NOT NULL
   - `valor` DECIMAL(10,2) NOT NULL
 
-## Credenciais de Teste (Seeder)
+## Credenciais de Teste
 
 - `alice@example.com` / `123456` (usuario)
 - `bruno@example.com` / `admin123` (administrador)
 - `carla@example.com` / `senha` (usuario)
-
-## Observações
-
-- Projeto em caráter de protótipo, sem criptografia ou segurança avançada.
-- Qualquer usuário pode escolher nível `administrador` no cadastro.
-
-## Pré-requisitos
-
-- MySQL Workbench (mais recente)
-  - Download: https://dev.mysql.com/downloads/workbench/
-  - Conexão passo-a-passo:
-    - Abrir Workbench → `+` para nova conexão
-    - `Hostname`: `127.0.0.1`
-    - `Port`: `3306`
-    - `Username`: `root`
-    - `Password`: `root`
-    - Testar conexão e salvar
-  - Verificação: conectar e executar `SHOW DATABASES;` (deve listar `steemo_db` após rodar o init).
-
-- WSL2 com Ubuntu (Windows)
-  - Guia oficial: https://learn.microsoft.com/windows/wsl/install
-  - Habilitar WSL: executar em PowerShell (Admin)
-    ```bash
-    wsl --install
-    ```
-  - Instalar Ubuntu:
-    ```bash
-    wsl --install -d Ubuntu-22.04
-    ```
-  - Verificação: `wsl -l -v` (deve mostrar Ubuntu com versão `2`).
-
-- Docker CLI dentro do WSL2 com Ubuntu (Windows)
-  - Guia oficial: https://docs.docker.com/engine/install/ubuntu/
-  - Instalar no Ubuntu (WSL2):  
-    ```bash
-    sudo apt update
-    sudo apt install ca-certificates curl gnupg lsb-release
-    sudo apt install docker-cli
-    ```
-  - Verificação: `docker --version` e `docker run hello-world`
-
-
-- Docker Desktop (estável mais recente)
-  - Download: https://www.docker.com/products/docker-desktop/
-  - Configurações recomendadas:
-    - Habilitar WSL2 integration para a distro Ubuntu
-    - Recursos: 2 CPUs, 4GB RAM (mínimo) para o MySQL
-  - Verificação: `docker --version` e `docker run hello-world`.
-
-- PHP (8.1+ recomendado; 8.2 testado)
-  - Download (Windows): https://windows.php.net/download
-  - No Linux (WSL/Ubuntu): `sudo apt update && sudo apt install php php-cli`
-  - Extensões necessárias:
-    - `pdo_mysql`
-  - Verificação:
-    - `php -v`
-    - Windows PowerShell: `php -m | findstr pdo_mysql`
-    - Linux: `php -m | grep pdo_mysql`
-
-## Comandos úteis de verificação
-
-- Docker: `docker ps`, `docker logs steemo-mysql --tail=50`
-- MySQL (CLI): `mysql -h 127.0.0.1 -uroot -proot -e "SHOW TABLES IN steemo_db;"`
-- PHP servidor embutido: `php -S localhost:8080 -t public`
 
 ## Funcionalidades
 
